@@ -1,0 +1,87 @@
+import { useState } from "react";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { FaFacebook, FaGithub } from "react-icons/fa6";
+import { FcGoogle } from "react-icons/fc";
+import { Link } from "react-router-dom";
+
+const SignIn = () => {
+    const [active, setActive] = useState(false);
+    return (
+        <section className="w-full min-h-[100vh] h-auto bg-[url('https://i.postimg.cc/85PcJvF9/Moon.png')] bg-cover bg-center flex items-center justify-center sm:py-12 p-6">
+            <div className="w-full sm:w-[40%] bg-white rounded-lg sm:py-6 sm:px-8 p-4 flex flex-col gap-5">
+
+                <form className="w-full flex flex-col gap-5">
+                    <h3 className="text-[1.8rem] font-[700] text-gray-900 text-center">
+                        Sign Up
+                    </h3>
+
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
+                    />
+
+                    <div className="w-full relative">
+                        <input
+                            type={active ? "text" : "password"}
+                            placeholder="Password"
+                            className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
+                        />
+                        {active ? (
+                            <BsEyeSlash
+                                className=" absolute top-[30%] right-[5%] text-[1.2rem] text-gray-500 cursor-pointer"
+                                onClick={() => setActive(false)}
+                            />
+                        ) : (
+                            <BsEye
+                                className=" absolute top-[30%] right-[5%] text-[1.2rem] text-gray-500 cursor-pointer"
+                                onClick={() => setActive(true)}
+                            />
+                        )}
+                    </div>
+
+                    <a href="#" className="text-[1rem] text-blue-500 font-[500]">
+                        Forget password
+                    </a>
+
+                    <button
+                        type="submit"
+                        className="w-full py-3 px-4 bg-blue-500 text-white border-none outline-none rounded-lg mt-3">
+                        Login
+                    </button>
+                </form>
+                <div className="flex items-center justify-center w-full gap-1">
+                    <span className="text-[1rem] text-gray-600 font-[500]">
+                        Don&apos;t have an account?{" "}
+                    </span>
+                    <span>
+                        <Link to={"/signUp"} className="text-[1rem] text-blue-500 font-[500]">
+                            SignUp
+                        </Link>
+                    </span>
+                </div>
+
+                <div className="w-full my-1 flex items-center justify-center gap-3">
+                    <hr className="w-[45%] bg-gray-400 h-[2px]" />
+                    <p>or</p>
+                    <hr className="w-[45%] bg-gray-400 h-[2px]" />
+                </div>
+
+                <button className="flex items-center justify-center py-2.5 px-4 gap-4 bg-[#4267b2] rounded-lg w-full text-[1rem] font-[500] text-white">
+                    <FaFacebook className="text-[1.8rem] text-white" />
+                    SignUp with Facebook
+                </button>
+                <button className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600">
+                    <FcGoogle className="text-[2rem]" />
+                    SignUp with Google
+                </button>
+                <button className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600">
+                    <FaGithub className="text-[2rem]" />
+                    SignUp with Github
+                </button>
+            </div>
+        </section>
+    );
+};
+
+export default SignIn;

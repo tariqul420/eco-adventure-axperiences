@@ -1,0 +1,47 @@
+/* done Font Family */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+nav a.active {
+    color:#9538e2;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+nav a.active::before {
+    content: '';
+    width: 100%;
+    background-color: #9538e2;
+    height: 2px;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+}
+
+nav a {
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    color: #9538e2;
+    cursor: pointer;
+}
+
+nav a.active:hover {
+    text-decoration: none;
+}
+
+@layer components {
+    .navBarLink {
+        @apply before:w-0 hover:before:w-full before:bg-[#9538e2] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#9538e2] transition-all duration-300 before:left-0 cursor-pointer capitalize;
+    }
+
+    .footerLink{
+        @apply text-[0.9rem] hover:text-primary cursor-pointer transition-all duration-200;
+    }
+}
