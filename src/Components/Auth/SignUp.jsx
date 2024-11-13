@@ -49,7 +49,7 @@ const SignUp = () => {
         const password = e.target.value
         setConfirmPass(password)
         if (strongPassword !== confirmPass) {
-            setPassMatch("Password Do Not Match")
+            setPassMatch("Password do not match!")
         }
     }
 
@@ -63,16 +63,15 @@ const SignUp = () => {
         const confirmPass = e.target.confirmPassword.value;
 
         if (signal !== "Password is strong!") {
-            alert("Password is not strong enough");
+            setSignal("Password is not strong enough.")
             return;
         }
 
         if (password !== confirmPass) {
-            alert("Passwords do not match");
+            setPassMatch("Passwords do not match");
             return;
         }
 
-        // Proceed with user creation since all conditions are satisfied
         createUser(email, password);
         console.log("User created:", email);
     };
@@ -122,14 +121,12 @@ const SignUp = () => {
                                     className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-12 py-3 w-full mt-1 focus:border-[#3B9DF8] transition-colors duration-300"
                                 />
 
-                                {strongPassword !== "" && (
+                                {strongPassword !== "" && signal !== "Password is strong!" && (
                                     <p className="text-[0.9rem] mt-1">
-                                        {signal !== "Password is strong!" && (
-                                            <span className="text-red-500 flex items-center gap-[5px]">
-                                                <MdErrorOutline className="text-[1.1rem]" />
-                                                {signal}
-                                            </span>
-                                        )}
+                                        <span className="text-red-500 flex items-center gap-[5px]">
+                                            <MdErrorOutline className="text-[1.1rem]" />
+                                            {signal}
+                                        </span>
                                     </p>
                                 )}
 
