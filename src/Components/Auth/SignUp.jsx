@@ -10,7 +10,7 @@ import { GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider } from "fi
 
 const SignUp = () => {
     const [active, setActive] = useState(false);
-    const { socialAuth } = useContext(ContextApi)
+    const { socialAuth, createUser } = useContext(ContextApi)
     const googleProvider = new GoogleAuthProvider()
     const facebookProvider = new FacebookAuthProvider()
     const githubProvider = new GithubAuthProvider
@@ -29,9 +29,9 @@ const SignUp = () => {
         const hasNumber = /[0-9]/.test(password);
         const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
-        if (!hasLowerCase) {
+        if (!hasUpperCase) {
             setSignal("uppercase-error");
-        } else if (!hasUpperCase) {
+        } else if (!hasLowerCase) {
             setSignal("lowercase-error");
         } else if (!hasNumber) {
             setSignal("number-error");
@@ -64,12 +64,28 @@ const SignUp = () => {
 
 
     const handelRegister = (e) => {
-        e.preventDefault()
-        const firstName = e.target.firstName.value
-        const lastName = e.target.lastName.value
-        const password = e.target.pass.value
-        const confirmPass = e.target.confirmPass.value
-    }
+        e.preventDefault();
+
+        const firstName = e.target.firstName.value;
+        const lastName = e.target.lastName.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        const confirmPass = e.target.confirmPassword.value;
+
+        if (signal !== "strong") {
+            alert("Password is not strong enough");
+            return;
+        }
+
+        if (password !== confirmPass) {
+            alert("Passwords do not match");
+            return;
+        }
+
+        // Proceed with user creation since all conditions are satisfied
+        createUser(email, password);
+        console.log("User created:", email);
+    };
 
     return (
         <section className="w-full min-h-[100vh] h-auto bg-[url('https://i.postimg.cc/85PcJvF9/Moon.png')] bg-cover bg-center flex items-center justify-center sm:py-12 p-6">
@@ -150,7 +166,7 @@ const SignUp = () => {
                             <input
                                 required
                                 type={active ? "text" : "password"}
-                                name="ConfirmPass"
+                                name="confirmPassword"
                                 placeholder="Confirm password"
                                 className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
                             />
