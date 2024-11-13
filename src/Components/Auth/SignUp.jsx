@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { FaFacebook, FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdErrorOutline } from "react-icons/md";
 import { ContextApi } from "../../Context/ContextApi";
 import { GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider } from "firebase/auth";
@@ -20,6 +20,7 @@ const SignUp = () => {
     const [confirmPass, setConfirmPass] = useState("")
     const [signal, setSignal] = useState(" ");
     const [passMatch, setPassMatch] = useState("");
+    const navigate = useNavigate()
 
     const handleStrongPasswordChecker = (e) => {
         const password = e.target.value;
@@ -56,8 +57,8 @@ const SignUp = () => {
     const handleRegister = (e) => {
         e.preventDefault();
 
-        const firstName = e.target.firstName.value;
-        const lastName = e.target.lastName.value;
+        // const firstName = e.target.firstName.value;
+        // const lastName = e.target.lastName.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
         const confirmPass = e.target.confirmPassword.value;
@@ -72,8 +73,14 @@ const SignUp = () => {
             return;
         }
 
-        createUser(email, password);
-        console.log("User created:", email);
+        createUser(email, password)
+            .then((result) => {
+                console.log(result);
+                navigate("/signUp/EmailVerification")
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     };
 
     return (
@@ -110,38 +117,38 @@ const SignUp = () => {
 
                     <div className="w-full flex items-center gap-4 justify-between sm:flex-row flex-col">
                         {/* Password */}
-                            <div className="w-full relative">
-                                <input
-                                    required
-                                    type={isEyeOpen ? "text" : "password"}
-                                    name="password"
-                                    onChange={handleStrongPasswordChecker}
-                                    placeholder="Password"
-                                    className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
+                        <div className="w-full relative">
+                            <input
+                                required
+                                type={isEyeOpen ? "text" : "password"}
+                                name="password"
+                                onChange={handleStrongPasswordChecker}
+                                placeholder="Password"
+                                className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
+                            />
+
+                            {strongPassword !== " " && signal !== "Password is strong!" && (
+                                <p className="text-[0.9rem] mt-1">
+                                    <span className="text-red-500 flex items-center gap-[5px]">
+                                        <MdErrorOutline className="text-[1.1rem]" />
+                                        {signal}
+                                    </span>
+                                </p>
+                            )}
+
+                            {isEyeOpen ? (
+                                <BsEyeSlash
+                                    className="absolute top-4 right-4 text-[1.2rem] text-[#777777] cursor-pointer"
+                                    onClick={() => setIsEyeOpen(false)}
                                 />
+                            ) : (
+                                <BsEye
+                                    className="absolute top-4 right-4 text-[1.2rem] text-[#777777] cursor-pointer"
+                                    onClick={() => setIsEyeOpen(true)}
+                                />
+                            )}
 
-                                {strongPassword !== " " && signal !== "Password is strong!" && (
-                                    <p className="text-[0.9rem] mt-1">
-                                        <span className="text-red-500 flex items-center gap-[5px]">
-                                            <MdErrorOutline className="text-[1.1rem]" />
-                                            {signal}
-                                        </span>
-                                    </p>
-                                )}
-
-                                {isEyeOpen ? (
-                                    <BsEyeSlash
-                                        className="absolute top-4 right-4 text-[1.2rem] text-[#777777] cursor-pointer"
-                                        onClick={() => setIsEyeOpen(false)}
-                                    />
-                                ) : (
-                                    <BsEye
-                                        className="absolute top-4 right-4 text-[1.2rem] text-[#777777] cursor-pointer"
-                                        onClick={() => setIsEyeOpen(true)}
-                                    />
-                                )}
-
-                            </div>
+                        </div>
 
                         {/* Confirm Password */}
                         <div className="w-full relative">
