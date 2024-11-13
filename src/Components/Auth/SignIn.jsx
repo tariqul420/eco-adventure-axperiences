@@ -9,7 +9,8 @@ import { FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider } from "fi
 
 const SignIn = () => {
     const [active, setActive] = useState(false);
-    const { signInUser, socialAuth, signOutUser } = useContext(ContextApi)
+    const { signInUser, socialAuth, signOutUser, resetEmail } = useContext(ContextApi)
+    const [email, setEmail] = useState("")
 
     const googleProvider = new GoogleAuthProvider();
     const facebookProvider = new FacebookAuthProvider();
@@ -38,6 +39,14 @@ const SignIn = () => {
             });
     };
 
+    const handelReset = () => {
+        resetEmail(email)
+        return toast.success("Check your email")
+            .catch(() => {
+                toast.error("Give your email")
+            })
+    }
+
 
     return (
         <section className="w-full min-h-[100vh] h-auto bg-[url('https://i.postimg.cc/85PcJvF9/Moon.png')] bg-cover bg-center flex items-center justify-center sm:py-12 p-6">
@@ -51,6 +60,7 @@ const SignIn = () => {
                     <input
                         type="email"
                         name="email"
+                        onChange={(e) => setEmail(e.target.value)}
                         placeholder="Email"
                         className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
                     />
@@ -75,9 +85,9 @@ const SignIn = () => {
                         )}
                     </div>
 
-                    <a href="#" className="text-[1rem] text-blue-500 font-[500]">
+                    <p onClick={handelReset} className="text-[1rem] text-blue-500 font-[500] cursor-pointer">
                         Forget password
-                    </a>
+                    </p>
 
                     <button
                         type="submit"

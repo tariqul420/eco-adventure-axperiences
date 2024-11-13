@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import auth from "../Firebase/Firebase";
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const ContextApi = createContext(null)
@@ -12,15 +12,15 @@ const ContextProvider = ({ children }) => {
     console.log(user);
 
     const socialAuth = (provider) => {
-        setLoading(true)
+        setLoading(true);
         return signInWithPopup(auth, provider)
             .then((result) => {
                 console.log(result);
             })
             .catch((error) => {
-                console.log(error);
+                console.log(error.code);
             })
-    }
+    };
 
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)
@@ -38,6 +38,7 @@ const ContextProvider = ({ children }) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             if (currentUser) {
+                console.log(currentUser.emailVerified);
                 if (currentUser.emailVerified) {
                     setUser(currentUser);
                 } else {
@@ -52,10 +53,15 @@ const ContextProvider = ({ children }) => {
         return () => {
             unSubscribe();
         };
+
     }, []);
 
     const emailVerification = () => {
         return sendEmailVerification(auth.currentUser)
+    }
+
+    const resetEmail = (email) => {
+        sendPasswordResetEmail(auth, email)
     }
 
     const authAllData = {
@@ -63,6 +69,7 @@ const ContextProvider = ({ children }) => {
         createUser,
         signInUser,
         signOutUser,
+        resetEmail,
         emailVerification,
         user,
         loading
