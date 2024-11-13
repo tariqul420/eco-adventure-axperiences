@@ -1,9 +1,9 @@
+
 import { useContext, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { FaFacebook, FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { MdErrorOutline } from "react-icons/md";
 import { ContextApi } from "../../Context/ContextApi";
 import { GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider } from "firebase/auth";
@@ -110,7 +110,6 @@ const SignUp = () => {
 
                     <div className="w-full flex items-center gap-4 justify-between sm:flex-row flex-col">
                         {/* Password */}
-                        <div className="w-full">
                             <div className="w-full relative">
                                 <input
                                     required
@@ -118,7 +117,7 @@ const SignUp = () => {
                                     name="password"
                                     onChange={handleStrongPasswordChecker}
                                     placeholder="Password"
-                                    className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-12 py-3 w-full mt-1 focus:border-[#3B9DF8] transition-colors duration-300"
+                                    className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
                                 />
 
                                 {strongPassword !== "" && signal !== "Password is strong!" && (
@@ -131,18 +130,18 @@ const SignUp = () => {
                                 )}
 
                                 {isEyeOpen ? (
-                                    <IoEyeOutline
-                                        className="absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
+                                    <BsEyeSlash
+                                        className="absolute top-4 right-4 text-[1.2rem] text-[#777777] cursor-pointer"
                                         onClick={() => setIsEyeOpen(false)}
                                     />
                                 ) : (
-                                    <IoEyeOffOutline
-                                        className="absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
+                                    <BsEye
+                                        className="absolute top-4 right-4 text-[1.2rem] text-[#777777] cursor-pointer"
                                         onClick={() => setIsEyeOpen(true)}
                                     />
                                 )}
+
                             </div>
-                        </div>
 
                         {/* Confirm Password */}
                         <div className="w-full relative">
@@ -166,12 +165,12 @@ const SignUp = () => {
 
                             {active ? (
                                 <BsEyeSlash
-                                    className="absolute top-[30%] right-[5%] text-[1.2rem] text-gray-500 cursor-pointer"
+                                    className="absolute top-4 right-4 text-[1.2rem] text-[#777777] cursor-pointer"
                                     onClick={() => setActive(false)}
                                 />
                             ) : (
                                 <BsEye
-                                    className="absolute top-[30%] right-[5%] text-[1.2rem] text-gray-500 cursor-pointer"
+                                    className="absolute top-4 right-4 text-[1.2rem] text-[#777777] cursor-pointer"
                                     onClick={() => setActive(true)}
                                 />
                             )}
