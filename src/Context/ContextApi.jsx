@@ -28,12 +28,6 @@ const ContextProvider = ({ children }) => {
 
     const signInUser = (email, password) => {
         return signInWithEmailAndPassword(auth, email, password)
-            .then((result) => {
-                console.log(result);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
     }
 
     const signOutUser = () => {

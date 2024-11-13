@@ -84,7 +84,7 @@ const SignUp = () => {
                 setIsModalOpen(true)
             })
             .catch((error) => {
-                if (error.message === "Firebase: Error (auth/email-already-in-use).") {
+                if (error.code === "auth/email-already-in-use") {
                     return toast.error("User already exist!")
                 }
             })
