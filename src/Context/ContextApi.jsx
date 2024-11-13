@@ -73,7 +73,7 @@ const ContextProvider = ({ children }) => {
 };
 
 ContextProvider.propTypes = {
-    children: PropTypes.object
+    children: PropTypes.array
 }
 
 export default ContextProvider;

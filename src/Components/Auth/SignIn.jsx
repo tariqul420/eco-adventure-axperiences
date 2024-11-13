@@ -56,7 +56,7 @@ const SignIn = () => {
                     </span>
                     <span>
                         <Link to={"/signUp"} className="text-[1rem] text-blue-500 font-[500]">
-                            SignUp
+                            Sign Up
                         </Link>
                     </span>
                 </div>
@@ -69,15 +69,15 @@ const SignIn = () => {
 
                 <button className="flex items-center justify-center py-2.5 px-4 gap-4 bg-[#4267b2] rounded-lg w-full text-[1rem] font-[500] text-white">
                     <FaFacebook className="text-[1.8rem] text-white" />
-                    SignUp with Facebook
+                    Sign Up with Facebook
                 </button>
                 <button className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600">
                     <FcGoogle className="text-[2rem]" />
-                    SignUp with Google
+                    Sign Up with Google
                 </button>
                 <button className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600">
                     <FaGithub className="text-[2rem]" />
-                    SignUp with Github
+                    Sign Up with Github
                 </button>
             </div>
         </section>

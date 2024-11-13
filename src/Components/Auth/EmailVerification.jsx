@@ -4,7 +4,7 @@ const EmailVerification = () => {
     return (
         <section className="w-full min-h-[100vh] bg-gray-100 flex items-center justify-center p-6">
             <div className="bg-white w-full sm:w-[600px] p-8 rounded-lg shadow-lg flex flex-col items-center justify-center">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">Registration Successful!</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Sign up Successful!</h2>
                 <p className="text-lg text-gray-600 mb-4">
                     Please verify your email address to complete your registration. We have sent a verification link to your email.
                 </p>
