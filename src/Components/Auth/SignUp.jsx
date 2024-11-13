@@ -10,15 +10,16 @@ import { GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider } from "fi
 
 const SignUp = () => {
     const [active, setActive] = useState(false);
-    const { socialAuth, createUser } = useContext(ContextApi)
-    const googleProvider = new GoogleAuthProvider()
-    const facebookProvider = new FacebookAuthProvider()
-    const githubProvider = new GithubAuthProvider
+    const { socialAuth, createUser } = useContext(ContextApi);
+    const googleProvider = new GoogleAuthProvider();
+    const facebookProvider = new FacebookAuthProvider();
+    const githubProvider = new GithubAuthProvider();
 
     const [isEyeOpen, setIsEyeOpen] = useState(false);
-    const [StrongPassword, setStrongPassword] = useState(" ");
+    const [strongPassword, setStrongPassword] = useState(" ");
+    const [confirmPass, setConfirmPass] = useState("")
     const [signal, setSignal] = useState(" ");
-    const [passMatch, setPassMatch] = useState("")
+    const [passMatch, setPassMatch] = useState("");
 
     const handleStrongPasswordChecker = (e) => {
         const password = e.target.value;
@@ -30,40 +31,29 @@ const SignUp = () => {
         const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
         if (!hasUpperCase) {
-            setSignal("uppercase-error");
+            setSignal("Password must contain at least one uppercase letter.");
         } else if (!hasLowerCase) {
-            setSignal("lowercase-error");
+            setSignal("Password must contain at least one lowercase letter.");
         } else if (!hasNumber) {
-            setSignal("number-error");
+            setSignal("Password must contain at least one number.");
         } else if (!hasSymbol) {
-            setSignal("symbol-error");
+            setSignal("Password must contain at least one special character.");
         } else if (password.length < 8) {
-            setSignal("length-error");
+            setSignal("Password must be at least 8 characters long.")
         } else {
-            setSignal("strong");
+            setSignal("Password is strong!");
+        }
+    };
+
+    const handelPasswordCheck = (e) => {
+        const password = e.target.value
+        setConfirmPass(password)
+        if (strongPassword !== confirmPass) {
+            setPassMatch("Password Do Not Match")
         }
     }
 
-    const getMessage = () => {
-        switch (signal) {
-            case "length-error":
-                return "Password must be at least 8 characters long.";
-            case "uppercase-error":
-                return "Password must contain at least one uppercase letter.";
-            case "lowercase-error":
-                return "Password must contain at least one lowercase letter.";
-            case "number-error":
-                return "Password must contain at least one number.";
-            case "symbol-error":
-                return "Password must contain at least one special character.";
-            default:
-                return "Wow! Very strong password.";
-        }
-    }
-
-
-
-    const handelRegister = (e) => {
+    const handleRegister = (e) => {
         e.preventDefault();
 
         const firstName = e.target.firstName.value;
@@ -72,7 +62,7 @@ const SignUp = () => {
         const password = e.target.password.value;
         const confirmPass = e.target.confirmPassword.value;
 
-        if (signal !== "strong") {
+        if (signal !== "Password is strong!") {
             alert("Password is not strong enough");
             return;
         }
@@ -90,8 +80,7 @@ const SignUp = () => {
     return (
         <section className="w-full min-h-[100vh] h-auto bg-[url('https://i.postimg.cc/85PcJvF9/Moon.png')] bg-cover bg-center flex items-center justify-center sm:py-12 p-6">
             <div className="w-full sm:w-[900px] sm:max-w-[1000px] bg-white backdrop-blur-3xl rounded-lg sm:py-6 sm:px-8 p-4 flex flex-col gap-5">
-
-                <form onSubmit={handelRegister} className="w-full flex flex-col gap-5">
+                <form onSubmit={handleRegister} className="w-full flex flex-col gap-5">
                     <h3 className="text-[1.8rem] font-[700] text-gray-900 text-center">
                         Sign Up
                     </h3>
@@ -101,14 +90,14 @@ const SignUp = () => {
                             type="text"
                             name="firstName"
                             placeholder="First name"
-                            className="py-3 px-4 border focus:outline-blue-500 border-gray-300  rounded-lg w-full"
+                            className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
                         />
                         <input
                             required
                             type="text"
                             name="lastName"
                             placeholder="Last name"
-                            className="py-3 px-4 border focus:outline-blue-500 border-gray-300  rounded-lg w-full"
+                            className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
                         />
                     </div>
 
@@ -121,40 +110,37 @@ const SignUp = () => {
                     />
 
                     <div className="w-full flex items-center gap-4 justify-between sm:flex-row flex-col">
-                        {/* ! Password */}
+                        {/* Password */}
                         <div className="w-full">
                             <div className="w-full relative">
                                 <input
                                     required
                                     type={isEyeOpen ? "text" : "password"}
                                     name="password"
-                                    id="password"
                                     onChange={handleStrongPasswordChecker}
                                     placeholder="Password"
                                     className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-12 py-3 w-full mt-1 focus:border-[#3B9DF8] transition-colors duration-300"
                                 />
 
-                                {
-                                    StrongPassword !== " " && (
-                                        <p className={`${signal === "normal" && "text-red-500"} text-[0.9rem] mt-1`}>
-                                            {
-                                                !(signal === "strong") && (<p className="text-red-500 flex items-center gap-[5px]">
-                                                    <MdErrorOutline className="text-[1.1rem]" />
-                                                    {getMessage()}
-                                                </p>)
-                                            }
-                                        </p>
-                                    )
-                                }
+                                {strongPassword !== "" && (
+                                    <p className="text-[0.9rem] mt-1">
+                                        {signal !== "Password is strong!" && (
+                                            <span className="text-red-500 flex items-center gap-[5px]">
+                                                <MdErrorOutline className="text-[1.1rem]" />
+                                                {signal}
+                                            </span>
+                                        )}
+                                    </p>
+                                )}
 
                                 {isEyeOpen ? (
                                     <IoEyeOutline
-                                        className=" absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
+                                        className="absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
                                         onClick={() => setIsEyeOpen(false)}
                                     />
                                 ) : (
                                     <IoEyeOffOutline
-                                        className=" absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
+                                        className="absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
                                         onClick={() => setIsEyeOpen(true)}
                                     />
                                 )}
@@ -166,47 +152,55 @@ const SignUp = () => {
                             <input
                                 required
                                 type={active ? "text" : "password"}
+                                onChange={handelPasswordCheck}
                                 name="confirmPassword"
                                 placeholder="Confirm password"
                                 className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
                             />
+
+                            {confirmPass !== "" && confirmPass !== strongPassword && (
+                                <p className="text-[0.9rem] mt-1">
+                                    <span className="text-red-500 flex items-center gap-[5px]">
+                                        <MdErrorOutline className="text-[1.1rem]" />
+                                        {passMatch}
+                                    </span>
+                                </p>
+                            )}
+
                             {active ? (
                                 <BsEyeSlash
-                                    className=" absolute top-[30%] right-[5%] text-[1.2rem] text-gray-500 cursor-pointer"
+                                    className="absolute top-[30%] right-[5%] text-[1.2rem] text-gray-500 cursor-pointer"
                                     onClick={() => setActive(false)}
                                 />
                             ) : (
                                 <BsEye
-                                    className=" absolute top-[30%] right-[5%] text-[1.2rem] text-gray-500 cursor-pointer"
+                                    className="absolute top-[30%] right-[5%] text-[1.2rem] text-gray-500 cursor-pointer"
                                     onClick={() => setActive(true)}
                                 />
                             )}
                         </div>
                     </div>
 
-
                     <div className="w-full flex items-center justify-center">
                         <button
                             type="submit"
-                            className="w-full py-3 px-4 bg-blue-500 text-white border-none outline-none rounded-lg mt-3">
+                            className="w-full py-3 px-4 bg-blue-500 text-white border-none outline-none rounded-lg mt-3"
+                        >
                             Sign up
                         </button>
                     </div>
                     <div className="flex items-center justify-center w-full gap-1">
                         <span className="text-[1rem] text-gray-600 font-[500]">
-                            have already an account?{" "}
+                            Already have an account?{" "}
                         </span>
                         <span>
-                            <Link
-                                to={"/signIn"}
-                                className="text-[1rem] text-blue-500 font-[500]">
-                                SignIn
+                            <Link to={"/signIn"} className="text-[1rem] text-blue-500 font-[500]">
+                                Sign In
                             </Link>
                         </span>
                     </div>
-
-
                 </form>
+
                 <div className="w-full my-1 flex items-center justify-center gap-3">
                     <hr className="w-[45%] bg-gray-400 h-[2px]" />
                     <p>or</p>
@@ -214,18 +208,27 @@ const SignUp = () => {
                 </div>
 
                 <div className="flex items-center justify-between w-full gap-5 sm:flex-row flex-col">
-                    <button onClick={() => socialAuth(facebookProvider)} className="flex items-center justify-center py-2.5 px-4 gap-4 bg-[#4267b2] rounded-lg w-full text-[1rem] font-[500] text-white">
+                    <button
+                        onClick={() => socialAuth(facebookProvider)}
+                        className="flex items-center justify-center py-2.5 px-4 gap-4 bg-[#4267b2] rounded-lg w-full text-[1rem] font-[500] text-white"
+                    >
                         <FaFacebook className="text-[1.8rem] text-white" />
-                        SignUp with Facebook
+                        Sign Up with Facebook
                     </button>
-                    <button onClick={() => socialAuth(googleProvider)} className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600">
+                    <button
+                        onClick={() => socialAuth(googleProvider)}
+                        className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600"
+                    >
                         <FcGoogle className="text-[2rem]" />
-                        SignUp with Google
+                        Sign Up with Google
                     </button>
                 </div>
-                <button onClick={() => socialAuth(githubProvider)} className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600">
+                <button
+                    onClick={() => socialAuth(githubProvider)}
+                    className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full mx-auto md:w-[407px] text-[1rem] font-[500] text-gray-600"
+                >
                     <FaGithub className="text-[2rem]" />
-                    SignUp with Github
+                    Sign Up with Github
                 </button>
             </div>
         </section>
