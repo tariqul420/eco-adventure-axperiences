@@ -15,7 +15,7 @@ Modal.setAppElement('#root');
 
 const SignUp = () => {
     const [active, setActive] = useState(false);
-    const { socialAuth, createUser } = useContext(ContextApi);
+    const { socialAuth, createUser, emailVerification } = useContext(ContextApi);
     const googleProvider = new GoogleAuthProvider();
     const facebookProvider = new FacebookAuthProvider();
     const githubProvider = new GithubAuthProvider();
@@ -62,8 +62,6 @@ const SignUp = () => {
     const handleRegister = (e) => {
         e.preventDefault();
 
-        // const firstName = e.target.firstName.value;
-        // const lastName = e.target.lastName.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
         const confirmPass = e.target.confirmPassword.value;
@@ -79,15 +77,21 @@ const SignUp = () => {
         }
 
         createUser(email, password)
-            .then((result) => {
-                console.log(result);
-                setIsModalOpen(true)
+            .then(() => {
+                emailVerification()
+                    .then(() => {
+                        setIsModalOpen(true);
+                        toast.info("please verify your email")
+                    })
+                    .catch(() => {
+                        toast.error("Failed to send verification email.");
+                    });
             })
             .catch((error) => {
                 if (error.code === "auth/email-already-in-use") {
-                    return toast.error("User already exist!")
+                    return toast.error("User already exists!");
                 }
-            })
+            });
     };
 
     const closeModal = () => {
@@ -257,9 +261,9 @@ const SignUp = () => {
                 className="bg-white p-6 w-[400px] mx-auto my-10 rounded-lg shadow-lg text-center flex items-center justify-center flex-col space-y-2"
                 overlayClassName="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center"
             >
-                <img className="w-[15rem]" src="https://i.postimg.cc/wvXsrLNf/success.png" alt="" />
+                <img className="w-[12rem]" src="https://i.postimg.cc/wvXsrLNf/success.png" alt="" />
+                <p className="font-semibold text-red-200 text-center">Check your email and verify <br /> your account</p>
                 <h2 className="text-2xl font-bold text-[#3ac37e]">Sign Up Successfully</h2>
-                <p className="font-semibold text-red-300"> Please check your email to verify your account.</p>
                 <div className="w-full">
                     <Link to="/signIn">
                         <button className="bg-blue-500 block text-white mt-4 px-6 py-2 w-full font-semibold rounded-lg">

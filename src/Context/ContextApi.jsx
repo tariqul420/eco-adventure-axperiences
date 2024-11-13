@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import auth from "../Firebase/Firebase";
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const ContextApi = createContext(null)
@@ -38,23 +38,32 @@ const ContextProvider = ({ children }) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             if (currentUser) {
-                setUser(currentUser)
+                if (currentUser.emailVerified) {
+                    setUser(currentUser);
+                } else {
+                    setUser(null);
+                }
             } else {
-                setUser(null)
+                setUser(null);
             }
-            setLoading(false)
-        })
+            setLoading(false);
+        });
 
         return () => {
-            unSubscribe()
-        }
-    }, [])
+            unSubscribe();
+        };
+    }, []);
+
+    const emailVerification = () => {
+        return sendEmailVerification(auth.currentUser)
+    }
 
     const authAllData = {
         socialAuth,
         createUser,
         signInUser,
         signOutUser,
+        emailVerification,
         user,
         loading
     }

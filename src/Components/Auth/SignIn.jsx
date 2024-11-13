@@ -9,7 +9,7 @@ import { FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider } from "fi
 
 const SignIn = () => {
     const [active, setActive] = useState(false);
-    const { signInUser, socialAuth } = useContext(ContextApi)
+    const { signInUser, socialAuth, signOutUser } = useContext(ContextApi)
 
     const googleProvider = new GoogleAuthProvider();
     const facebookProvider = new FacebookAuthProvider();
@@ -17,20 +17,27 @@ const SignIn = () => {
 
     const handelSignIn = (e) => {
         e.preventDefault();
-        const email = e.target.email.value
-        const password = e.target.password.value
+        const email = e.target.email.value;
+        const password = e.target.password.value;
 
         signInUser(email, password)
             .then((result) => {
-                console.log(result);
+                const user = result.user;
+
+                if (user.emailVerified) {
+                    console.log("Sign-in successful", result);
+                } else {
+                    signOutUser();
+                    toast.error("Please verify your email before signing in.");
+                }
             })
             .catch((error) => {
                 if (error.code === "auth/invalid-credential") {
-                    toast.error("Incorrect email & password")
+                    toast.error("Incorrect email or password");
                 }
-                console.log(error.code);
-            })
-    }
+            });
+    };
+
 
     return (
         <section className="w-full min-h-[100vh] h-auto bg-[url('https://i.postimg.cc/85PcJvF9/Moon.png')] bg-cover bg-center flex items-center justify-center sm:py-12 p-6">
