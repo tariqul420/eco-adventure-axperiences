@@ -120,7 +120,7 @@ const SignUp = () => {
                                     className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
                                 />
 
-                                {strongPassword !== "" && signal !== "Password is strong!" && (
+                                {strongPassword !== " " && signal !== "Password is strong!" && (
                                     <p className="text-[0.9rem] mt-1">
                                         <span className="text-red-500 flex items-center gap-[5px]">
                                             <MdErrorOutline className="text-[1.1rem]" />
