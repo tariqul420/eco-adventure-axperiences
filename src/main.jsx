@@ -3,7 +3,7 @@ import { StrictMode } from 'react'
 import router from './Router/Router'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
-import ContextProvider from './Context/ContextApi'
+import ContextProvider from './Context/AuthContext'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

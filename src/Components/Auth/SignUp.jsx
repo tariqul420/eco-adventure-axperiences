@@ -5,7 +5,7 @@ import { FaFacebook, FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { MdErrorOutline } from "react-icons/md";
-import { ContextApi } from "../../Context/ContextApi";
+import { AuthContext } from "../../Context/AuthContext";
 import { GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider } from "firebase/auth";
 import { toast } from "react-toastify";
 import Modal from 'react-modal';
@@ -15,7 +15,7 @@ Modal.setAppElement('#root');
 
 const SignUp = () => {
     const [active, setActive] = useState(false);
-    const { socialAuth, createUser, emailVerification } = useContext(ContextApi);
+    const { socialAuth, createUser, emailVerification } = useContext(AuthContext);
     const googleProvider = new GoogleAuthProvider();
     const facebookProvider = new FacebookAuthProvider();
     const githubProvider = new GithubAuthProvider();

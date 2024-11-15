@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { ContextApi } from "../Context/ContextApi";
+import { AuthContext } from "../Context/AuthContext";
 
 const Home = () => {
-    const {signOutUser} = useContext(ContextApi)
+    const { signOutUser } = useContext(AuthContext)
 
     return (
         <div>

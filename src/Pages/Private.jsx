@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import { ContextApi } from "../Context/ContextApi";
+import { AuthContext } from "../Context/AuthContext";
 import { Navigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const Private = ({ children }) => {
 
-    const { user, loading } = useContext(ContextApi)
+    const { user, loading } = useContext(AuthContext)
 
     if (loading) {
         return <h1 className="text-5xl text-red-500">Loading</h1>

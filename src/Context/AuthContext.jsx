@@ -4,9 +4,9 @@ import { createContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const ContextApi = createContext(null)
+export const AuthContext = createContext(null)
 
-const ContextProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
     console.log(user);
@@ -76,14 +76,14 @@ const ContextProvider = ({ children }) => {
     }
 
     return (
-        <ContextApi.Provider value={authAllData}>
+        <AuthContext.Provider value={authAllData}>
             {children}
-        </ContextApi.Provider>
+        </AuthContext.Provider>
     );
 };
 
-ContextProvider.propTypes = {
+AuthProvider.propTypes = {
     children: PropTypes.array
 }
 
-export default ContextProvider;
+export default AuthProvider;

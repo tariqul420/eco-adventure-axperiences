@@ -3,13 +3,13 @@ import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { FaFacebook, FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import { ContextApi } from "../../Context/ContextApi";
+import { AuthContext } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
 import { FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 
 const SignIn = () => {
     const [active, setActive] = useState(false);
-    const { signInUser, socialAuth, signOutUser, resetEmail } = useContext(ContextApi)
+    const { signInUser, socialAuth, signOutUser, resetEmail } = useContext(AuthContext)
     const [email, setEmail] = useState("")
 
     const googleProvider = new GoogleAuthProvider();
