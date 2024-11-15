@@ -111,15 +111,15 @@ const SignUp = () => {
                             <input
                                 required
                                 type="text"
-                                name="firstName"
-                                placeholder="First name"
+                                name="fullName"
+                                placeholder="Full name"
                                 className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
                             />
                             <input
                                 required
                                 type="text"
-                                name="lastName"
-                                placeholder="Last name"
+                                name="photoUrl"
+                                placeholder="Photo URL"
                                 className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
                             />
                         </div>
