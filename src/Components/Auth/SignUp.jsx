@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { FaFacebook, FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MdErrorOutline } from "react-icons/md";
 import { AuthContext } from "../../Context/AuthContext";
 import { GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider } from "firebase/auth";
@@ -26,7 +26,6 @@ const SignUp = () => {
     const [confirmPass, setConfirmPass] = useState("")
     const [signal, setSignal] = useState(" ");
     const [passMatch, setPassMatch] = useState("");
-    const navigate = useNavigate()
 
     const handleStrongPasswordChecker = (e) => {
         const password = e.target.value;
@@ -87,7 +86,7 @@ const SignUp = () => {
                         toast.info("please verify your email")
                         updateUserProfile({ displayName: fullName, photoURL: photoUrl })
                             .then(() => {
-                                navigate("/")
+                                // Write code
                             })
                             .catch(() => {
                                 toast.error("not update Your Profile")
