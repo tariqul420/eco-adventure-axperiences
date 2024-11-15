@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import auth from "../Firebase/Firebase";
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null)
@@ -60,8 +60,12 @@ const AuthProvider = ({ children }) => {
         return sendEmailVerification(auth.currentUser)
     }
 
+    const updateUserProfile = (updateData) => {
+        return updateProfile(auth.currentUser, updateData)
+    }
+
     const resetEmail = (email) => {
-        sendPasswordResetEmail(auth, email)
+        return sendPasswordResetEmail(auth, email)
     }
 
     const authAllData = {
@@ -71,6 +75,7 @@ const AuthProvider = ({ children }) => {
         signOutUser,
         resetEmail,
         emailVerification,
+        updateUserProfile,
         user,
         loading
     }

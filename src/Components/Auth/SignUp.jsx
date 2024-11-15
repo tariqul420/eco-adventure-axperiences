@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { FaFacebook, FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdErrorOutline } from "react-icons/md";
 import { AuthContext } from "../../Context/AuthContext";
 import { GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider } from "firebase/auth";
@@ -15,7 +15,7 @@ Modal.setAppElement('#root');
 
 const SignUp = () => {
     const [active, setActive] = useState(false);
-    const { socialAuth, createUser, emailVerification } = useContext(AuthContext);
+    const { socialAuth, createUser, emailVerification, updateUserProfile } = useContext(AuthContext);
     const googleProvider = new GoogleAuthProvider();
     const facebookProvider = new FacebookAuthProvider();
     const githubProvider = new GithubAuthProvider();
@@ -26,6 +26,7 @@ const SignUp = () => {
     const [confirmPass, setConfirmPass] = useState("")
     const [signal, setSignal] = useState(" ");
     const [passMatch, setPassMatch] = useState("");
+    const navigate = useNavigate()
 
     const handleStrongPasswordChecker = (e) => {
         const password = e.target.value;
@@ -62,6 +63,8 @@ const SignUp = () => {
     const handleRegister = (e) => {
         e.preventDefault();
 
+        const fullName = e.target.fullName.value;
+        const photoUrl = e.target.photoUrl.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
         const confirmPass = e.target.confirmPassword.value;
@@ -82,6 +85,13 @@ const SignUp = () => {
                     .then(() => {
                         setIsModalOpen(true);
                         toast.info("please verify your email")
+                        updateUserProfile({ displayName: fullName, photoURL: photoUrl })
+                            .then(() => {
+                                navigate("/")
+                            })
+                            .catch(() => {
+                                toast.error("not update Your Profile")
+                            })
                     })
                     .catch(() => {
                         toast.error("Failed to send verification email.");
