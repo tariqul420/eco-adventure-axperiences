@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { FaFacebook, FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdCheckCircle, MdErrorOutline } from "react-icons/md";
 import { AuthContext } from "../../Context/AuthContext";
 import { GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider } from "firebase/auth";
@@ -14,6 +14,7 @@ Modal.setAppElement('#root');
 
 
 const SignUp = () => {
+    const navigate = useNavigate()
     const [active, setActive] = useState(false);
     const { socialAuth, createUser, emailVerification, updateUserProfile } = useContext(AuthContext);
     const googleProvider = new GoogleAuthProvider();
@@ -74,7 +75,7 @@ const SignUp = () => {
         }
 
         if (password !== confirmPass) {
-            setPassMatch("Passwords do not match");
+            setPassMatch("Passwords don't match.");
             return;
         }
 
@@ -83,13 +84,13 @@ const SignUp = () => {
                 emailVerification()
                     .then(() => {
                         setIsModalOpen(true);
-                        toast.info("please verify your email")
+                        toast.info("Please verify your email.")
                         updateUserProfile({ displayName: fullName, photoURL: photoUrl })
                             .then(() => {
                                 // Write code
                             })
                             .catch(() => {
-                                toast.error("not update Your Profile")
+                                toast.error("Not update Your Profile.")
                             })
                     })
                     .catch(() => {
@@ -238,22 +239,24 @@ const SignUp = () => {
 
                     <div className="flex items-center justify-between w-full gap-5 sm:flex-row flex-col">
                         <button
-                            onClick={() => socialAuth(facebookProvider)}
+                            onClick={() => { socialAuth(facebookProvider), navigate('/') }}
                             className="flex items-center justify-center py-2.5 px-4 gap-4 bg-[#4267b2] rounded-lg w-full text-[1rem] font-[500] text-white"
                         >
                             <FaFacebook className="text-[1.8rem] text-white" />
                             Sign Up with Facebook
                         </button>
+
                         <button
-                            onClick={() => socialAuth(googleProvider)}
+                            onClick={() => { socialAuth(googleProvider), navigate('/') }}
                             className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600"
                         >
                             <FcGoogle className="text-[2rem]" />
                             Sign Up with Google
                         </button>
                     </div>
+
                     <button
-                        onClick={() => socialAuth(githubProvider)}
+                        onClick={() => { socialAuth(githubProvider), navigate('/') }}
                         className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full mx-auto md:w-[407px] text-[1rem] font-[500] text-gray-600"
                     >
                         <FaGithub className="text-[2rem]" />

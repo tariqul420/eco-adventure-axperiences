@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import auth from "../Firebase/Firebase";
 import { createContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { toast } from "react-toastify";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null)
@@ -9,16 +10,17 @@ export const AuthContext = createContext(null)
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
-    console.log(user);
 
     const socialAuth = (provider) => {
         setLoading(true);
         return signInWithPopup(auth, provider)
-            .then((result) => {
-                console.log(result);
+            .then(() => {
+                // sign up/sign in successful
             })
             .catch((error) => {
-                console.log(error.code);
+                if (error.code === "auth/account-exists-with-different-credential") {
+                    return toast.error("User already exists!");
+                }
             })
     };
 
@@ -38,7 +40,6 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             if (currentUser) {
-                console.log(currentUser.emailVerified);
                 if (currentUser.emailVerified) {
                     setUser(currentUser);
                 } else {

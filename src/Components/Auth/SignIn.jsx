@@ -32,7 +32,6 @@ const SignIn = () => {
                 const user = result.user;
                 if (user.emailVerified) {
                     navigate(location.state ? location.state : '/')
-                    console.log("Sign-in successful", result);
                 } else {
                     signOutUser();
                     toast.warning("Please verify your account.");
@@ -138,15 +137,17 @@ const SignIn = () => {
                         <hr className="w-[45%] bg-gray-400 h-[2px]" />
                     </div>
 
-                    <button onClick={() => socialAuth(facebookProvider)} className="flex items-center justify-center py-2.5 px-4 gap-4 bg-[#4267b2] rounded-lg w-full text-[1rem] font-[500] text-white">
+                    <button onClick={() => { socialAuth(facebookProvider), navigate(location.state ? location.state : '/') }} className="flex items-center justify-center py-2.5 px-4 gap-4 bg-[#4267b2] rounded-lg w-full text-[1rem] font-[500] text-white">
                         <FaFacebook className="text-[1.8rem] text-white" />
                         Sign Up with Facebook
                     </button>
-                    <button onClick={() => socialAuth(googleProvider)} className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600">
+
+                    <button onClick={() => { socialAuth(googleProvider), navigate(location.state ? location.state : '/') }} className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600">
                         <FcGoogle className="text-[2rem]" />
                         Sign Up with Google
                     </button>
-                    <button onClick={() => socialAuth(githubProvider)} className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600">
+
+                    <button onClick={() => { socialAuth(githubProvider), navigate(location.state ? location.state : '/') }} className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600">
                         <FaGithub className="text-[2rem]" />
                         Sign Up with Github
                     </button>
