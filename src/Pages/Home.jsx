@@ -1,12 +1,16 @@
 import { useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Home = () => {
-    const { signOutUser } = useContext(AuthContext)
+    const { signOutUser, user } = useContext(AuthContext)
 
     return (
         <div>
-            <button onClick={signOutUser} className="btn">Logout</button>
+            {
+                user ? (<button onClick={signOutUser} className="btn">Logout</button>) : (<Link to="/signIn"  
+                    className="btn">SignIn</Link>)
+            }
         </div>
     );
 };

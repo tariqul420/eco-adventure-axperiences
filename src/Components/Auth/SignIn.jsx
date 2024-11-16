@@ -33,12 +33,12 @@ const SignIn = () => {
                     console.log("Sign-in successful", result);
                 } else {
                     signOutUser();
-                    toast.error("Please verify your email before signing in.");
+                    toast.warning("Please verify your account.");
                 }
             })
             .catch((error) => {
                 if (error.code === "auth/invalid-credential") {
-                    toast.error("Incorrect email or password");
+                    toast.error("Incorrect email or password.");
                 }
             });
     };
@@ -50,11 +50,11 @@ const SignIn = () => {
     const handelSendEmail = () => {
         resetEmail(emailPass)
             .then(() => {
-                toast.success("Check your email");
+                toast.success("Check your email.");
                 setIsModalOpen(false);
             })
             .catch(() => {
-                toast.error("It's not valid email");
+                toast.warning("It's not valid email.");
                 setIsModalOpen(true);
             });
     };
@@ -104,7 +104,7 @@ const SignIn = () => {
 
                         <div className="flex items-center justify-between">
                             <label className="flex items-center">
-                                <input type="checkbox" required className="mr-2" />
+                                <input type="checkbox" className="mr-2" />
                                 <span className="text-[1rem] text-gray-700 font-[500]">Remember Me</span>
                             </label>
                             <p onClick={handelReset} className="text-[1rem] text-blue-500 font-[500] cursor-pointer">
