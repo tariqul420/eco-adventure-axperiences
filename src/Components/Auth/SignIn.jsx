@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { FaFacebook, FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
 import Modal from 'react-modal';
@@ -11,6 +11,8 @@ import { FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider } from "fi
 Modal.setAppElement('#root');
 
 const SignIn = () => {
+    const location = useLocation()
+    const navigate = useNavigate()
     const [active, setActive] = useState(false);
     const [emailPass, setEmailPass] = useState("")
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,8 +30,8 @@ const SignIn = () => {
         signInUser(email, password)
             .then((result) => {
                 const user = result.user;
-
                 if (user.emailVerified) {
+                    navigate(location.state ? location.state : '/')
                     console.log("Sign-in successful", result);
                 } else {
                     signOutUser();
@@ -38,7 +40,7 @@ const SignIn = () => {
             })
             .catch((error) => {
                 if (error.code === "auth/invalid-credential") {
-                    toast.error("Incorrect email or password.");
+                    toast.error("Invalid email or password.");
                 }
             });
     };

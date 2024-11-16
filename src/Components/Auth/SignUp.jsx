@@ -4,7 +4,7 @@ import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { FaFacebook, FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import { MdErrorOutline } from "react-icons/md";
+import { MdCheckCircle, MdErrorOutline } from "react-icons/md";
 import { AuthContext } from "../../Context/AuthContext";
 import { GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider } from "firebase/auth";
 import { toast } from "react-toastify";
@@ -262,25 +262,29 @@ const SignUp = () => {
                 </div>
             </section>
 
-            {/* Modal for purchase confirmation */}
             <Modal
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
                 contentLabel="Sign Up Successfully"
-                className="bg-white p-6 w-[400px] mx-auto my-10 rounded-lg shadow-lg text-center flex items-center justify-center flex-col space-y-2"
-                overlayClassName="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center"
+                className="bg-white p-8 w-[400px] mx-auto my-10 rounded-lg shadow-xl text-center flex flex-col items-center justify-center space-y-4 transition-all transform duration-300"
+                overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center transition-opacity duration-300"
             >
-                <img className="w-[12rem]" src="https://i.postimg.cc/wvXsrLNf/success.png" alt="" />
-                <p className="font-semibold text-red-200 text-center">Check your email and verify <br /> your account</p>
-                <h2 className="text-2xl font-bold text-[#3ac37e]">Sign Up Successfully</h2>
-                <div className="w-full">
+                <div className="flex flex-col items-center space-y-4">
+                    <MdCheckCircle className="text-[#3ac37e] text-6xl" />
+                    <h2 className="text-3xl font-extrabold text-[#3ac37e]">Sign Up Successful</h2>
+                    <p className="font-medium text-gray-600">
+                        Check your email and verify <br /> your account.
+                    </p>
+                </div>
+                <div className="w-full mt-4">
                     <Link to="/signIn">
-                        <button className="bg-blue-500 block text-white mt-4 px-6 py-2 w-full font-semibold rounded-lg">
+                        <button className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white mt-4 px-6 py-3 w-full font-bold rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:scale-105">
                             Go to Sign In
                         </button>
                     </Link>
                 </div>
             </Modal>
+
         </>
     );
 };

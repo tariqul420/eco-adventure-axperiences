@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { ScaleLoader } from "react-spinners";
 
 const Private = ({ children }) => {
-
+    const location = useLocation()
     const { user, loading } = useContext(AuthContext)
 
     if (loading) {
@@ -26,7 +26,7 @@ const Private = ({ children }) => {
 
     return (
         <div>
-            <Navigate to="/signIn"></Navigate>
+            <Navigate state={location.pathname} to="/signIn"></Navigate>
         </div>
     );
 };
