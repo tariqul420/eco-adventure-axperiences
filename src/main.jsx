@@ -3,13 +3,13 @@ import { StrictMode } from 'react'
 import router from './Router/Router'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
-import ContextProvider from './Context/AuthContext'
 import { ToastContainer } from 'react-toastify';
+import AuthProvider from './Context/AuthContext'
 import 'react-toastify/dist/ReactToastify.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ContextProvider>
+    <AuthProvider>
       <RouterProvider router={router} />
       <ToastContainer
         position="top-center"
@@ -24,6 +24,6 @@ createRoot(document.getElementById('root')).render(
         theme="light"
         transition:Bounce
       />
-    </ContextProvider>
+    </AuthProvider>
   </StrictMode>,
 )

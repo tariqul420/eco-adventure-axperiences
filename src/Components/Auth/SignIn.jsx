@@ -74,13 +74,15 @@ const SignIn = () => {
                             Sign In
                         </h3>
 
-                        <input
-                            type="email"
-                            name="email"
-                            required
-                            placeholder="Email"
-                            className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
-                        />
+                        <div className="w-full relative">
+                            <input
+                                type="email"
+                                name="email"
+                                required
+                                placeholder="Email"
+                                className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
+                            />
+                        </div>
 
                         <div className="w-full relative">
                             <input
